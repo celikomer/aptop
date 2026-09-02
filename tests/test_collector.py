@@ -6,6 +6,7 @@ from unittest import mock
 import pytest
 
 from aptop import collector
+from aptop.formatting import render_plain
 
 
 def test_discovery_adapts_to_one_or_two_cards():
@@ -27,6 +28,16 @@ def test_explicit_devices_are_validated_and_sorted():
     assert collector.discover_devices(("xdma1", "xdma0", "xdma1")) == ["xdma0", "xdma1"]
     with pytest.raises(ValueError, match="invalid XDMA device"):
         collector.discover_devices(("/dev/xdma0",))
+
+
+def test_default_state_path_follows_original_user_under_sudo():
+    with (
+        mock.patch.dict("os.environ", {"SUDO_UID": "1001"}, clear=True),
+        mock.patch.object(collector.os, "getuid", return_value=0),
+        mock.patch.object(collector.os, "geteuid", return_value=0),
+        mock.patch.object(Path, "is_dir", return_value=True),
+    ):
+        assert collector.default_state_path() == Path("/run/user/1001/aptop-workload.json")
 
 
 def test_runtime_state_is_sanitized_and_stale_claims_retire(tmp_path: Path):
@@ -103,6 +114,19 @@ def test_snapshot_has_one_card_without_fabricating_fpga_metrics(tmp_path: Path):
     assert result["cards"][0]["present"] is True
     assert "fpga_utilization" not in json.dumps(result).lower()
     assert "not FPGA compute utilization" in result["measurement_boundary"]
+
+
+def test_plain_busy_card_without_runtime_state_reports_memory_unavailable():
+    value = {
+        "host": {},
+        "cards": [{
+            "label": "Apex 1", "device": "xdma0", "present": True,
+            "busy": True, "device_nodes": 3, "runtime_memory": {},
+            "memory_live": False, "processes": [],
+        }],
+    }
+    rendered = render_plain(value)
+    assert "runtime memory unavailable" in rendered
 
 
 def test_process_labels_do_not_echo_arbitrary_arguments():

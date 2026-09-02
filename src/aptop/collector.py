@@ -24,7 +24,14 @@ def default_state_path() -> Path:
     runtime = os.environ.get("XDG_RUNTIME_DIR")
     if runtime:
         return Path(runtime) / "aptop-workload.json"
-    return Path("/tmp") / f"aptop-{os.getuid()}" / "workload.json"
+    uid = os.getuid()
+    sudo_uid = os.environ.get("SUDO_UID")
+    if os.geteuid() == 0 and sudo_uid and sudo_uid.isdecimal():
+        uid = int(sudo_uid)
+        original_runtime = Path("/run/user") / str(uid)
+        if original_runtime.is_dir():
+            return original_runtime / "aptop-workload.json"
+    return Path("/tmp") / f"aptop-{uid}" / "workload.json"
 
 
 def _read_text(path: str | Path) -> str:

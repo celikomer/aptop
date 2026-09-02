@@ -107,6 +107,22 @@ async def test_two_cards_stack_on_a_narrow_terminal():
 
 
 @pytest.mark.asyncio
+async def test_busy_card_without_runtime_state_says_memory_unavailable():
+    app = make_app(1)
+    app.snapshot["cards"][0].update({
+        "busy": True,
+        "memory_live": False,
+        "runtime_memory": {},
+        "activity": None,
+    })
+    async with app.run_test(size=(140, 40)) as pilot:
+        await pilot.pause()
+        text = str(app.query_one("#card-0-mapped").render()).lower()
+        assert "unavailable" in text
+        assert "idle" not in text
+
+
+@pytest.mark.asyncio
 async def test_zero_cards_has_an_explanatory_panel():
     app = make_app(0)
     async with app.run_test(size=(120, 38)) as pilot:

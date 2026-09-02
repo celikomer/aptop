@@ -267,7 +267,7 @@ class ApexCard(Container):
                 f"[dim]/ {mib(memory.get('capacity_mib'))}[/]"
             )
         else:
-            mapped_line = "[dim]MEMORY[/]\n[bold]—[/]  [dim]idle[/]"
+            mapped_line = "[dim]MEMORY[/]\n[bold]—[/]  [dim]unavailable[/]"
         self.query_one(f"#{self.prefix}-mapped", Static).update(mapped_line)
         memory_widget = self.query_one(f"#{self.prefix}-memory", MemoryMap)
         memory_widget.set_memory(memory, live=memory_live)

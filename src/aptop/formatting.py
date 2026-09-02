@@ -127,6 +127,8 @@ def render_plain(snapshot: dict, *, show_history: bool = False) -> str:
                 f"  {label} memory {percent(memory.get('known_mapped_percent'))} "
                 f"({mib(memory.get('known_mapped_mib'))}/{mib(memory.get('capacity_mib'))})"
             )
+        elif card.get("busy"):
+            lines.append("  runtime memory unavailable (no workload state)")
         activity = card.get("activity") or {}
         if card.get("busy") and activity:
             layers = "—"

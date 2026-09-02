@@ -1,0 +1,287 @@
+$bg: #05080d;
+$surface: #080d14;
+$surface2: #0c131d;
+$line: #223043;
+$cyan: #34d8ff;
+$green: #45f5a1;
+$lime: #b7f34a;
+$amber: #ffc857;
+$red: #ff5d78;
+$violet: #a78bfa;
+$muted: #728096;
+$text: #d7e0ea;
+
+Screen {
+    background: $bg;
+    color: $text;
+}
+
+TopBar {
+    dock: top;
+    height: 3;
+    layout: horizontal;
+    background: #09111a;
+    border-bottom: heavy $cyan;
+    padding: 0 1;
+}
+
+#brand {
+    width: 23;
+    height: 2;
+    content-align: left middle;
+}
+
+#app-title {
+    width: 1fr;
+    height: 2;
+    content-align: left middle;
+}
+
+#sample-state {
+    width: auto;
+    min-width: 22;
+    height: 2;
+    content-align: right middle;
+}
+
+#dashboard {
+    height: 1fr;
+    layout: grid;
+    grid-size: 1 3;
+    grid-columns: 1fr;
+    grid-rows: 10 1fr 9;
+    grid-gutter: 1;
+    padding: 0 1;
+    background: $bg;
+}
+
+.panel {
+    width: 100%;
+    height: 100%;
+    background: $surface;
+    border: round $line;
+    padding: 0 1;
+}
+
+.panel-title {
+    dock: top;
+    width: 100%;
+    height: 1;
+    color: $cyan;
+    text-style: bold;
+}
+
+#host-body {
+    height: 1fr;
+    layout: grid;
+    grid-size: 4 1;
+    grid-columns: 25 1fr 1fr 31;
+    grid-gutter: 0 1;
+}
+
+.metric-block {
+    height: 100%;
+    padding: 1 1 0 1;
+    background: $surface2;
+}
+
+.right-metrics {
+    border-left: tall $line;
+}
+
+.chart-box {
+    height: 100%;
+    background: #070c12;
+    border-left: tall $line;
+    padding: 0 1;
+}
+
+.chart-title {
+    dock: top;
+    height: 1;
+    color: $muted;
+    text-style: bold;
+}
+
+Sparkline {
+    width: 100%;
+    height: 1fr;
+}
+
+.cpu-chart > Sparkline > .sparkline--max-color {
+    color: $lime;
+}
+
+.cpu-chart > Sparkline > .sparkline--min-color {
+    color: #183e35;
+}
+
+.ram-chart > Sparkline > .sparkline--max-color {
+    color: $violet;
+}
+
+.ram-chart > Sparkline > .sparkline--min-color {
+    color: #292342;
+}
+
+#cards-grid {
+    height: 100%;
+    layout: grid;
+    grid-gutter: 0 1;
+}
+
+#cards-grid.one-card {
+    grid-size: 1 1;
+    grid-columns: 1fr;
+}
+
+#cards-grid.two-card {
+    grid-size: 2 1;
+    grid-columns: 1fr 1fr;
+}
+
+.apex-card {
+    min-height: 17;
+}
+
+.apex-card.running {
+    border: round $green;
+}
+
+.apex-card.missing {
+    border: round $red;
+}
+
+.apex-card.idle {
+    border: round #31506a;
+}
+
+.card-metrics {
+    height: 3;
+    layout: grid;
+    grid-size: 3 1;
+    grid-columns: 1fr 1fr 1fr;
+    grid-gutter: 0 1;
+    background: $surface2;
+    padding: 0 1;
+}
+
+.card-metrics > Static {
+    height: 3;
+    border-right: tall $line;
+}
+
+MemoryMap {
+    width: 100%;
+    height: 5;
+    padding: 0 1;
+}
+
+.workload-line {
+    height: 2;
+    padding: 0 1;
+    background: $surface2;
+}
+
+.residency-chart {
+    height: 1fr;
+    min-height: 3;
+    margin-top: 1;
+    border-left: none;
+}
+
+.residency-chart > Sparkline > .sparkline--max-color {
+    color: $green;
+}
+
+.residency-chart > Sparkline > .sparkline--min-color {
+    color: #163b34;
+}
+
+.card-detail {
+    height: 1;
+    color: $muted;
+    padding: 0 1;
+}
+
+#process-table {
+    height: 1fr;
+    padding: 1 1 0 1;
+    background: $surface2;
+}
+
+#no-cards-message {
+    height: 1fr;
+    content-align: center middle;
+    text-align: center;
+}
+
+Footer {
+    dock: bottom;
+    height: 1;
+    background: #c7d2fe;
+    color: #080b10;
+}
+
+HelpScreen {
+    align: center middle;
+    background: #020409 70%;
+}
+
+#help-dialog {
+    width: 84;
+    height: 26;
+    background: $surface;
+    border: round $cyan;
+    padding: 1 2;
+}
+
+.help-title {
+    height: 3;
+    text-style: bold;
+    border-bottom: heavy $line;
+}
+
+Screen.-narrow #app-title {
+    display: none;
+}
+
+Screen.-narrow #brand {
+    width: 1fr;
+}
+
+Screen.-narrow #dashboard {
+    grid-rows: 11 auto 9;
+    overflow-y: auto;
+}
+
+Screen.-narrow #host-body {
+    grid-size: 2 2;
+    grid-columns: 1fr 1fr;
+    grid-rows: 4 1fr;
+}
+
+Screen.-narrow .right-metrics {
+    border-left: none;
+}
+
+Screen.-narrow #cards-grid.two-card {
+    grid-size: 1 2;
+    grid-columns: 1fr;
+    grid-rows: 23 23;
+    height: 47;
+}
+
+Screen.-narrow #cards-grid.one-card {
+    height: 23;
+}
+
+Screen.-short.-wide #dashboard,
+Screen.-short.-ultra #dashboard {
+    grid-rows: 8 1fr 7;
+}
+
+Screen.-short.-wide .metric-block,
+Screen.-short.-ultra .metric-block {
+    padding-top: 0;
+}

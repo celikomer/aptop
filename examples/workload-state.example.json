@@ -1,0 +1,43 @@
+{
+  "schema": "aptop-workload/v1",
+  "active": true,
+  "model": "example/model",
+  "display_name": "Example split model",
+  "phase": "decode",
+  "observer_pid": 1234,
+  "child_pid": 1235,
+  "started_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:00:10Z",
+  "cards": [
+    {
+      "device": "xdma0",
+      "layer_start": 0,
+      "layer_end_exclusive": 24,
+      "runtime_memory": {
+        "capacity_mib": 4096,
+        "weight_mib": 2800,
+        "kv_cache_mib": 64,
+        "tensor_scratch_mib": 96,
+        "program_mib": 8,
+        "unreported_or_reserved_mib": 1128,
+        "known_mapped_mib": 2968,
+        "known_mapped_percent": 72.46
+      }
+    },
+    {
+      "device": "xdma1",
+      "layer_start": 24,
+      "layer_end_exclusive": 48,
+      "runtime_memory": {
+        "capacity_mib": 4096,
+        "weight_mib": 2750,
+        "kv_cache_mib": 64,
+        "tensor_scratch_mib": 96,
+        "program_mib": 8,
+        "unreported_or_reserved_mib": 1178,
+        "known_mapped_mib": 2918,
+        "known_mapped_percent": 71.24
+      }
+    }
+  ]
+}
